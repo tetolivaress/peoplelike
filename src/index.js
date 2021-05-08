@@ -1,17 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { StrictMode } from 'react'
+import { render } from 'react-dom'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+import { Provider } from 'react-redux'
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase'
+import { fbConfig, rrfProps }  from './FirebaseConfig'
+import store from './store'
+import firebase from 'firebase'
+
+import './App.css'
+import App from './App'
+
+firebase.apps.length || firebase.initializeApp(fbConfig )
+
+render(
+  <Provider store={store}>
+    <ReactReduxFirebaseProvider {...rrfProps(store)}>
+      <StrictMode>
+        <App />
+      </StrictMode>
+    </ReactReduxFirebaseProvider>
+  </Provider>,
   document.getElementById('root')
-);
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+)

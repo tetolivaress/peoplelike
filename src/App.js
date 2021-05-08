@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import Layout from '@components/layout'
+
+import { useSelector } from 'react-redux'
+import { isLoaded, useFirestoreConnect } from 'react-redux-firebase'
+
+import Loading from '@components/Loading'
+import Home from '@pages'
+import Dashboard from '@pages/dashboard'
+import AddPeople from '@pages/dashboard/AddPeople'
 
 function App() {
+
+  useFirestoreConnect([
+    { collection: 'people' }
+  ])
+
+  const people = useSelector(({ firestore }) => firestore.ordered.people)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Loading isOpen={!isLoaded(people)} />
+      <BrowserRouter>
+        <Layout>
+          <Switch>
+            <Route exact path="/" component={Home}/>
+            <Route exact path="/dashboard" component={Dashboard}/>
+            <Route exact path="/people/add" component={AddPeople}/>
+          </Switch>
+        </Layout>
+      </BrowserRouter>
+    </>
+  )
 }
 
-export default App;
+export default App
