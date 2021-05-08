@@ -7,8 +7,8 @@ const PersonDetail = ({ person, onLike }) => {
   const [ready, setReady] = useState(false)
 
   const handleSwipe = useSwipeable({
-    onSwipedUp: ()=>onLike(person, true),
-    onSwipedDown: ()=>onLike(person, false)
+    onSwipedUp: ()=>handleClick(person, true),
+    onSwipedDown: ()=>handleClick(person, false)
   })
 
   let image = useRef(null)
