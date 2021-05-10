@@ -10,7 +10,7 @@ import firebase from 'firebase'
 import './App.css'
 import App from './App'
 
-firebase.apps.length || firebase.initializeApp(fbConfig )
+firebase.apps.length || firebase.initializeApp(fbConfig)
 
 render(
   <Provider store={store}>

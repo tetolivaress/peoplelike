@@ -4,12 +4,16 @@ import { useRef } from 'react'
 import { useFirestore } from 'react-redux-firebase'
 import { useSwipeable } from 'react-swipeable'
 
+import { addLike } from '@actions'
+import { useDispatch } from 'react-redux'
+
 const Carousel = ({ cards, cardsAmount }) => {
 
   const firestore = useFirestore()
   let carousel = useRef(null)
+  const dispatch = useDispatch()
 
-  const refPassthrough = (el) => {
+  const refPassthrough = el => {
     handleSwipe.ref(el)
     carousel.current = el
   }
@@ -29,23 +33,18 @@ const Carousel = ({ cards, cardsAmount }) => {
   }
 
   const handleLike = async (person, like) => {
-    const increment = firestore.FieldValue.increment(1)
-    const field = like ? {like: increment} : {dislike: increment} 
-    await firestore.collection('people')
-      .doc(person.id)
-      .update(field, {merge: true}
-      )
+    await dispatch(addLike(person, like, firestore))
     carouselScroll()
   }
 
   return (
     <div className="relative">
       <ChevronLeftIcon
-        className="w-5 h-5 text-green-800 absolute top-1/2 left-2 cursor-pointer"
+        className="w-5 h-5 text-green-800 absolute top-1/2 left-2 cursor-pointer hidden md:block"
         onClick={()=>carouselScroll(-1)}
     />
       <ChevronRightIcon
-        className="w-5 h-5 text-green-800 absolute top-1/2 right-2 cursor-pointer"
+        className="w-5 h-5 text-green-800 absolute top-1/2 right-2 cursor-pointer hidden md:block"
         onClick={()=>carouselScroll(1)}  
       />
       <div className="flex flex-nowrap overflow-hidden" {...handleSwipe} ref={refPassthrough}>

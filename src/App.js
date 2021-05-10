@@ -16,10 +16,11 @@ function App() {
   ])
 
   const people = useSelector(({ firestore }) => firestore.ordered.people)
+  const loading = useSelector(({ loading }) => loading)
 
   return (
     <>
-      <Loading isOpen={!isLoaded(people)} />
+      <Loading isOpen={!isLoaded(people) || loading} />
       <BrowserRouter>
         <Layout>
           <Switch>

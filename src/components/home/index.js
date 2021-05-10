@@ -7,10 +7,6 @@ const Home = () => {
     { collection: 'people' } // or 'todos'
   ])
   const people = useSelector(({ firestore }) => firestore.ordered.people)
-  return (
-    <div className="w-full">
-      { isLoaded(people) && <Carousel cards={people} cardsAmount={1} />}
-    </div>
-  )
+  return isLoaded(people) && <Carousel cards={people} cardsAmount={1} />
 }
 export default Home

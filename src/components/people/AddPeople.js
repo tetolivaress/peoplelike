@@ -6,7 +6,12 @@ import readFileAsync from '@utils/FileReader'
 import resizeImage from '@utils/ImageReader'
 import { useHistory } from 'react-router'
 
+import { addPeople } from '@actions'
+import { useDispatch } from 'react-redux'
+
 const AddPeople = () => {
+
+  const dispatch = useDispatch()
 
   const firestore = useFirestore()
   const history = useHistory()
@@ -37,7 +42,11 @@ const AddPeople = () => {
 
   const handleSubmit = async e => {
     e.preventDefault()
-    await firestore.collection('people').add({...form, like: 0, dislike: 0})
+    await dispatch(addPeople(
+      {...form, like: 0, dislike: 0},
+      firestore
+      )
+    )
     return history.push('/dashboard')
   }
 

@@ -10,13 +10,14 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className="flex justify-end">
+      <div className="flex justify-end text-2xl font-bold items-center">
+        <p className="text-center flex-grow justify-self-start">Personas</p>
         <Link
           to="/people/add"
-          className="p-4 bg-green-300 mr-2 text-gray-900 font-semibold rounded-md"
+          className="p-4 bg-green-300 mr-2 text-gray-900 font-semibold rounded-md grow"
         >
-          <PlusCircleIcon className="w-4 h-4" />
-          <span>Add Person</span>
+          <PlusCircleIcon className="w-4 h-4 inline" />
+          <span>Agregar</span>
         </Link>
       </div>
       {isLoaded(people) && <PeopleList people={people} />}
