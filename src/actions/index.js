@@ -1,19 +1,21 @@
-const addPeople = (payload, firestore) => {
-  return async dispatch => {
+const addPeople = (payload) => {
+  return async (dispatch, getState, getFirebase) => {
     dispatch(showLoading())
-    await firestore 
+    
+    await getFirebase()
+      .firestore()
       .collection('people')
       .add({...payload, like: 0, dislike: 0})
     dispatch(hideLoading())
   }
 }
 
-const addLike = (person, like, firestore) => {
-  return async dispatch => {
-    dispatch(showLoading())
-    const increment = firestore.FieldValue.increment(1)
+const addLike = (person, like) => {
+  return async (dispatch, getState, getFirebase) => {
+    dispatch(showLoading(getState, getFirebase))
+    const increment = getFirebase().firestore.FieldValue.increment(1)
     const field = like ? {like: increment} : {dislike: increment} 
-    await firestore.collection('people')
+    await getFirebase().firestore().collection('people')
       .doc(person.id)
       .update(field, {merge: true}
       )

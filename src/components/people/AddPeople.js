@@ -42,11 +42,7 @@ const AddPeople = () => {
 
   const handleSubmit = async e => {
     e.preventDefault()
-    await dispatch(addPeople(
-      {...form, like: 0, dislike: 0},
-      firestore
-      )
-    )
+    await dispatch(addPeople({...form, like: 0, dislike: 0}))
     return history.push('/dashboard')
   }
 

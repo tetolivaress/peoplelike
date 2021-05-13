@@ -33,7 +33,7 @@ const Carousel = ({ cards, cardsAmount }) => {
   }
 
   const handleLike = async (person, like) => {
-    await dispatch(addLike(person, like, firestore))
+    await dispatch(addLike(person, like))
     carouselScroll()
   }
 
