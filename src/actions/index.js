@@ -12,7 +12,7 @@ const addPeople = (payload) => {
 
 const addLike = (person, like) => {
   return async (dispatch, getState, getFirebase) => {
-    dispatch(showLoading(getState, getFirebase))
+    dispatch(showLoading())
     const increment = getFirebase().firestore.FieldValue.increment(1)
     const field = like ? {like: increment} : {dislike: increment} 
     await getFirebase().firestore().collection('people')
